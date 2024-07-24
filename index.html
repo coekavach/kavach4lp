@@ -94,17 +94,59 @@
         // Data
         const sections = {
             abbreviations: [
-                { term: "LP-OCIP", definition: "Loco Pilot - Operation cum Indication Panel" },
-                { term: "SR", definition: "Staff Responsible mode" },
-                { term: "LS", definition: "Limited Supervision mode" },
-                { term: "FS", definition: "Full Supervision mode" },
-                { term: "SoS", definition: "Save Our Soul" },
-                { term: "SPAD", definition: "Signal Passing At Danger" },
-                { term: "MR", definition: "Main Reservoir" },
-                { term: "BP", definition: "Brake Pipe Pressure" },
-                { term: "EB", definition: "Emergency Brake" },
-                { term: "TLC", definition: "Traction Loco Controller" },
-                { term: "PRC", definition: "Power Controller" }
+                  { term: "ABS", definition: "Automatic Block Signalling" },
+                  { term: "AWS", definition: "Auxiliary Warning System" },
+                  { term: "BIU", definition: "Brake Interface Unit" },
+                  { term: "BP", definition: "Brake Pipe Pressure" },
+                  { term: "CCB", definition: "Computer Controller Brake" },
+                  { term: "CNFM", definition: "Confirm" },
+                  { term: "CoE", definition: "Centre of Excellence" },
+                  { term: "CRW", definition: "Cab Rear Wall" },
+                  { term: "EB", definition: "Emergency Brake" },
+                  { term: "EEV", definition: "Emergency Exhaust Valve" },
+                  { term: "EM", definition: "Emergency Magnet Valve Isolation" },
+                  { term: "EMU", definition: "Electric Multiple Unit" },
+                  { term: "FS", definition: "Full Supervision mode" },
+                  { term: "FSB", definition: "Full Service Brake" },
+                  { term: "G&SR", definition: "General & Subsidiary Rules" },
+                  { term: "IB", definition: "Intermediate Block Signal" },
+                  { term: "IODU", definition: "Input Output Distribution Unit" },
+                  { term: "IRAB", definition: "Indian Railway Air Brake" },
+                  { term: "IR-ATP", definition: "Indian Railways – Automatic Train Protection System" },
+                  { term: "IRU", definition: "Interface Relay Unit" },
+                  { term: "IS", definition: "Isolation mode" },
+                  { term: "LC Gate", definition: "Level Crossing Gate" },
+                  { term: "LP", definition: "Loco Pilot" },
+                  { term: "LP-OCIP", definition: "Loco Pilot - Operation cum Indication Panel/DMI" },
+                  { term: "LS", definition: "Limited Supervision mode" },
+                  { term: "MA", definition: "Movement Authority" },
+                  { term: "MCB", definition: "Miniature Circuit Breaker" },
+                  { term: "MR", definition: "Main Reservoir" },
+                  { term: "NL", definition: "Non-Leading" },
+                  { term: "NSB", definition: "Normal Service Brake" },
+                  { term: "OEM", definition: "Original Equipment Manufacturer" },
+                  { term: "OS", definition: "On-Sight mode" },
+                  { term: "OSD", definition: "Officer on Special Duty" },
+                  { term: "OV/OVRD", definition: "Override mode" },
+                  { term: "PDU", definition: "Power Distribution Unit" },
+                  { term: "PG", definition: "Pulse Generator" },
+                  { term: "PRC", definition: "Power Controller" },
+                  { term: "PSR", definition: "Permanent Speed Restriction" },
+                  { term: "PT", definition: "Post Trip mode" },
+                  { term: "RFID", definition: "Radio Frequency Identification" },
+                  { term: "RV/REV", definition: "Reverse" },
+                  { term: "SB", definition: "Service Brake and Standby mode" },
+                  { term: "SH/SHNT", definition: "Shunt mode" },
+                  { term: "SIFA Magnet Valve", definition: "Emergency Magnet Valve" },
+                  { term: "SM-OCIP", definition: "Station Master - Operation cum Indication Panel" },
+                  { term: "SoS", definition: "Save Our Soul" },
+                  { term: "SPAD", definition: "Signal Passing At Danger" },
+                  { term: "SR", definition: "Staff Responsible mode" },
+                  { term: "TCAS", definition: "Train Collision Avoidance System" },
+                  { term: "TIN", definition: "Track Identification Number" },
+                  { term: "TLC", definition: "Traction Loco Controller" },
+                  { term: "TRIP", definition: "Trip mode" },
+                  { term: "T&RS", definition: "Traction & Rolling Stock" }
             ],
             operatingModes: [
                 { title: "Standby Mode", content: "Initial mode after power-on until mode selection." },
@@ -121,13 +163,61 @@
                 { title: "System Failure Mode", content: "Activated when critical faults are detected." },
                 { title: "Isolation Mode", content: "Used when Kavach system needs to be isolated." }
             ],
-            procedures: [
-                { title: "Switching On Onboard Kavach", content: "1. Switch on Kavach power MCB. 2. Ensure Leading/Non Leading switch in 'Leading Position'. 3. Keep Kavach Isolation switch on NORMAL position. 4. Keep MR cock and EM cock in ON position. 5. Insert BL key or Reverser key. 6. Perform brake test and select train configuration." },
-                { title: "Switching Off Onboard Kavach", content: "1. Keep Kavach Isolation switch on ISOLATE position. 2. Keep MR cock and EM cock in OFF position. 3. Switch OFF power MCB." },
-                { title: "Brake Functional Test", content: "1. Ensure MR pressure > 7.00 kg/cm2 and BP pressure > 4.8 kg/cm2. 2. Onboard Kavach performs automatic brake test (NSB, FSB, EB). 3. Select Train Configuration after successful brake test." },
-                { title: "SOS Procedure", content: "To generate Manual SOS: Press 'SOS' and 'COMMON' on LP-OCIP simultaneously. For Unusual Stoppage SOS: Acknowledge within 15 seconds when prompted." },
-                { title: "Collision Prevention", content: "Kavach detects and prevents head-on collisions and rear-end collisions by automatically applying brakes when trains are on collision course." },
-                { title: "SPAD Recovery", content: "When SPAD occurs, Kavach enters Trip Mode. Once stopped, LP must acknowledge to enter Post Trip Mode, allowing movement with speed restriction." }
+            procedures = [
+                {
+                    title: "Switching On Onboard Kavach",
+                    content: `
+                        <ul>
+                            <li>Switch on Kavach power MCB.</li>
+                            <li>Ensure Leading/Non Leading switch in 'Leading Position'.</li>
+                            <li>Keep Kavach Isolation switch on NORMAL position.</li>
+                            <li>Keep MR cock and EM cock in ON position.</li>
+                            <li>Insert BL key or Reverser key.</li>
+                            <li>Perform brake test and select train configuration.</li>
+                        </ul>
+                    `
+                },
+                {
+                    title: "Switching Off Onboard Kavach",
+                    content: `
+                        <ul>
+                            <li>Keep Kavach Isolation switch on ISOLATE position.</li>
+                            <li>Keep MR cock and EM cock in OFF position.</li>
+                            <li>Switch OFF power MCB.</li>
+                        </ul>
+                    `
+                },
+                {
+                    title: "Brake Functional Test",
+                    content: `
+                        <ul>
+                            <li>Ensure MR pressure > 7.00 kg/cm2 and BP pressure > 4.8 kg/cm2.</li>
+                            <li>Onboard Kavach performs automatic brake test (NSB, FSB, EB).</li>
+                            <li>Select Train Configuration after successful brake test.</li>
+                        </ul>
+                    `
+                },
+                {
+                    title: "SOS Procedure",
+                    content: `
+                        <ul>
+                            <li>To generate Manual SOS: Press 'SOS' and 'COMMON' on LP-OCIP simultaneously.</li>
+                            <li>For Unusual Stoppage SOS: Acknowledge within 15 seconds when prompted.</li>
+                        </ul>
+                    `
+                },
+                {
+                    title: "Collision Prevention",
+                    content: `
+                        <p>Kavach detects and prevents head-on collisions and rear-end collisions by automatically applying brakes when trains are on collision course.</p>
+                    `
+                },
+                {
+                    title: "SPAD Recovery",
+                    content: `
+                        <p>When SPAD occurs, Kavach enters Trip Mode. Once stopped, LP must acknowledge to enter Post Trip Mode, allowing movement with speed restriction.</p>
+                    `
+                }
             ],
             dosAndDonts: {
                 dos: [
