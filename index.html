@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kavach Operation Manual Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.415.0/lucide.min.js"></script>
+    <style>
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-4">
+        <h1 class="text-2xl font-bold mb-4">Kavach Operation Manual Dashboard</h1>
+        <div class="mb-4 flex items-center">
+            <input type="text" id="searchInput" placeholder="Search..." class="border rounded p-2 mr-2 flex-grow">
+            <i data-lucide="search" class="text-gray-500"></i>
+        </div>
+        <div id="searchResults" class="bg-white shadow-md rounded p-4 hidden">
+            <h2 class="text-xl font-semibold mb-4">Search Results</h2>
+            <div id="resultsContent"></div>
+        </div>
+        <div id="mainContent">
+            <div class="mb-4">
+                <div class="flex flex-wrap border-b">
+                    <button class="tab py-2 px-4 border-b-2 border-blue-500" data-tab="overview">Overview</button>
+                    <button class="tab py-2 px-4" data-tab="abbreviations">Abbreviations</button>
+                    <button class="tab py-2 px-4" data-tab="operatingModes">Operating Modes</button>
+                    <button class="tab py-2 px-4" data-tab="procedures">Key Procedures</button>
+                    <button class="tab py-2 px-4" data-tab="dosAndDonts">DOs and DON'Ts</button>
+                </div>
+            </div>
+            <div class="bg-white shadow-md rounded p-4">
+                <div id="overview" class="tab-content active">
+                    <h2 class="text-xl font-semibold mb-4">Overview</h2>
+                    <p>The Kavach system is an Automatic Train Protection system used in Indian Railways. This dashboard provides key information from the operation manual, including abbreviations, operating modes, procedures, and safety guidelines.</p>
+                </div>
+                <div id="abbreviations" class="tab-content">
+                    <h2 class="text-xl font-semibold mb-4">Abbreviations</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Abbreviations content will be dynamically added here -->
+                    </div>
+                </div>
+                <div id="operatingModes" class="tab-content">
+                    <h2 class="text-xl font-semibold mb-4">Operating Modes</h2>
+                    <!-- Operating modes content will be dynamically added here -->
+                </div>
+                <div id="procedures" class="tab-content">
+                    <h2 class="text-xl font-semibold mb-4">Key Procedures</h2>
+                    <!-- Procedures content will be dynamically added here -->
+                </div>
+                <div id="dosAndDonts" class="tab-content">
+                    <h2 class="text-xl font-semibold mb-4">DOs and DON'Ts</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h3 class="font-semibold mb-2 flex items-center">
+                                <i data-lucide="cpu" class="mr-2"></i> DOs
+                            </h3>
+                            <ul class="list-disc pl-5">
+                                <!-- DOs content will be dynamically added here -->
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold mb-2 flex items-center">
+                                <i data-lucide="alert-triangle" class="mr-2"></i> DON'Ts
+                            </h3>
+                            <ul class="list-disc pl-5">
+                                <!-- DON'Ts content will be dynamically added here -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Data
+        const sections = {
+            abbreviations: [
+                { term: "LP-OCIP", definition: "Loco Pilot - Operation cum Indication Panel" },
+                { term: "SR", definition: "Staff Responsible mode" },
+                { term: "LS", definition: "Limited Supervision mode" },
+                { term: "FS", definition: "Full Supervision mode" },
+                { term: "SoS", definition: "Save Our Soul" },
+                { term: "SPAD", definition: "Signal Passing At Danger" },
+                { term: "MR", definition: "Main Reservoir" },
+                { term: "BP", definition: "Brake Pipe Pressure" },
+                { term: "EB", definition: "Emergency Brake" },
+                { term: "TLC", definition: "Traction Loco Controller" },
+                { term: "PRC", definition: "Power Controller" }
+            ],
+            operatingModes: [
+                { title: "Standby Mode", content: "Initial mode after power-on until mode selection." },
+                { title: "Staff Responsible (SR) Mode", content: "Used for normal train operation when Kavach is active." },
+                { title: "Limited Supervision (LS) Mode", content: "Used when some trackside equipment is not available." },
+                { title: "Full Supervision (FS) Mode", content: "Provides full protection based on Movement Authority." },
+                { title: "Override Mode", content: "Allows passing a signal at danger with speed restriction." },
+                { title: "On-sight Mode", content: "Used for moving with caution in specific situations." },
+                { title: "Trip Mode", content: "Activated when train passes a stop signal at ON. Emergency brake is applied." },
+                { title: "Post Trip Mode", content: "Entered after acknowledging Trip Mode. Allows movement with speed limit." },
+                { title: "Non Leading Mode", content: "Used for locomotives not leading the train." },
+                { title: "Reverse Mode", content: "For reverse movement of the train." },
+                { title: "Shunt Mode", content: "Used for shunting operations." },
+                { title: "System Failure Mode", content: "Activated when critical faults are detected." },
+                { title: "Isolation Mode", content: "Used when Kavach system needs to be isolated." }
+            ],
+            procedures: [
+                { title: "Switching On Onboard Kavach", content: "1. Switch on Kavach power MCB. 2. Ensure Leading/Non Leading switch in 'Leading Position'. 3. Keep Kavach Isolation switch on NORMAL position. 4. Keep MR cock and EM cock in ON position. 5. Insert BL key or Reverser key. 6. Perform brake test and select train configuration." },
+                { title: "Switching Off Onboard Kavach", content: "1. Keep Kavach Isolation switch on ISOLATE position. 2. Keep MR cock and EM cock in OFF position. 3. Switch OFF power MCB." },
+                { title: "Brake Functional Test", content: "1. Ensure MR pressure > 7.00 kg/cm2 and BP pressure > 4.8 kg/cm2. 2. Onboard Kavach performs automatic brake test (NSB, FSB, EB). 3. Select Train Configuration after successful brake test." },
+                { title: "SOS Procedure", content: "To generate Manual SOS: Press 'SOS' and 'COMMON' on LP-OCIP simultaneously. For Unusual Stoppage SOS: Acknowledge within 15 seconds when prompted." },
+                { title: "Collision Prevention", content: "Kavach detects and prevents head-on collisions and rear-end collisions by automatically applying brakes when trains are on collision course." },
+                { title: "SPAD Recovery", content: "When SPAD occurs, Kavach enters Trip Mode. Once stopped, LP must acknowledge to enter Post Trip Mode, allowing movement with speed restriction." }
+            ],
+            dosAndDonts: {
+                dos: [
+                    "Check equipment intactness before switching ON",
+                    "Read and understand the user manual thoroughly",
+                    "Acknowledge alerts on LP-OCIP immediately",
+                    "Properly select train configuration and operating modes",
+                    "Handle LP-OCIP with care",
+                    "Inform TLC/PRC about any defects",
+                    "Follow G&SR provisions and operational requirements",
+                    "Ensure intactness of RFID readers"
+                ],
+                donts: [
+                    "Don't attempt any repair work",
+                    "Don't switch OFF power when system is functioning",
+                    "Don't remove system modules or connectors when functioning",
+                    "Don't isolate Onboard Kavach when Train is in movement"
+                ]
+            }
+        };
+
+        // Populate content
+        document.addEventListener('DOMContentLoaded', () => {
+            populateAbbreviations();
+            populateOperatingModes();
+            populateProcedures();
+            populateDosAndDonts();
+            setupTabNavigation();
+            setupSearch();
+            lucide.createIcons();
+        });
+
+        function populateAbbreviations() {
+            const container = document.querySelector('#abbreviations .grid');
+            sections.abbreviations.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'flex items-start';
+                div.innerHTML = `
+                    <i data-lucide="radio" class="mr-2 mt-1"></i>
+                    <div>
+                        <span class="font-semibold">${item.term}:</span> ${item.definition}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function populateOperatingModes() {
+            const container = document.querySelector('#operatingModes');
+            sections.operatingModes.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'mb-4';
+                div.innerHTML = `
+                    <h3 class="font-semibold mb-2 flex items-center">
+                        <i data-lucide="settings" class="mr-2"></i> ${item.title}
+                    </h3>
+                    <p>${item.content}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function populateProcedures() {
+            const container = document.querySelector('#procedures');
+            sections.procedures.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'mb-4';
+                div.innerHTML = `
+                    <h3 class="font-semibold mb-2 flex items-center">
+                        <i data-lucide="settings" class="mr-2"></i> ${item.title}
+                    </h3>
+                    <p>${item.content}</p>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function populateDosAndDonts() {
+            const dosContainer = document.querySelector('#dosAndDonts ul:first-of-type');
+            const dontsContainer = document.querySelector('#dosAndDonts ul:last-of-type');
+            
+            sections.dosAndDonts.dos.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                dosContainer.appendChild(li);
+            });
+
+            sections.dosAndDonts.donts.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                dontsContainer.appendChild(li);
+            });
+        }
+
+        function setupTabNavigation() {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('border-blue-500'));
+                    tab.classList.add('border-blue-500');
+                    const tabContent = document.querySelectorAll('.tab-content');
+                    tabContent.forEach(content => content.classList.remove('active'));
+                    document.getElementById(tab.dataset.tab).classList.add('active');
+                });
+            });
+        }
+
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            const mainContent = document.getElementById('mainContent');
+            const resultsContent = document.getElementById('resultsContent');
+
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                if (searchTerm.length > 0) {
+                    const results = performSearch(searchTerm);
+                    displaySearchResults(results);
+                    searchResults.classList.remove('hidden');
+                    mainContent.classList.add('hidden');
+                } else {
+                    searchResults.classList.add('hidden');
+                    mainContent.classList.remove('hidden');
+                }
+            });
+        }
+
+        function performSearch(searchTerm) {
+            const results = [];
+            Object.entries(sections).forEach(([sectionKey, sectionContent]) => {
+                if (Array.isArray(sectionContent)) {
+                    sectionContent.forEach(item => {
+                        if (JSON.stringify(item).toLowerCase().includes(searchTerm)) {
+                            results.push({ section: sectionKey, content: item });
+                        }
+                    });
+                } else if (typeof sectionContent === 'object') {
+                    Object.entries(sectionContent).forEach(([subKey, subContent]) => {
+                        subContent.forEach(item => {
+                            if (item.toLowerCase().includes(searchTerm)) {
+                                results.push({ section: `${sectionKey} - ${subKey}`, content: item });
+                            }
+                        });
+                    });
+                }
+            });
+            return results;
+        }
+
+        function displaySearchResults(results) {
+            const resultsContent = document.getElementById('resultsContent');
+            resultsContent.innerHTML = '';
+            if (results.length > 0) {
+                results.forEach(result => {
+                    const div = document.createElement('div');
+                    div.className = 'mb-4';
+                    div.innerHTML = `
+                        <h3 class="font-semibold">${result.section}</h3>
+                        <p>${typeof result.content === 'string' ? result.content : JSON.stringify(result.content)}</p>
+                    `;
+                    resultsContent.appendChild(div);
+                });
+            } else {
+                resultsContent.innerHTML = '<p>No results found</p>';
+            }
+        }
+    </script>
+</body>
+</html>
