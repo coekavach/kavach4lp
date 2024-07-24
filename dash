@@ -1,0 +1,236 @@
+import React, { useState, useMemo } from 'react';
+import { AlertCircle, Cpu, AlertTriangle, Radio, Power, Settings, Bell, Search } from 'lucide-react';
+
+const Dashboard = () => {
+  const [activeTab, setActiveTab] = useState("overview");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const sections = {
+    overview: {
+      title: "Overview",
+      content: "The Kavach system is an Automatic Train Protection system used in Indian Railways. This dashboard provides key information from the operation manual, including abbreviations, operating modes, procedures, and safety guidelines."
+    },
+    abbreviations: {
+      title: "Abbreviations",
+      items: [
+        { term: "LP-OCIP", definition: "Loco Pilot - Operation cum Indication Panel" },
+        { term: "SR", definition: "Staff Responsible mode" },
+        { term: "LS", definition: "Limited Supervision mode" },
+        { term: "FS", definition: "Full Supervision mode" },
+        { term: "SoS", definition: "Save Our Soul" },
+        { term: "SPAD", definition: "Signal Passing At Danger" },
+        { term: "MR", definition: "Main Reservoir" },
+        { term: "BP", definition: "Brake Pipe Pressure" },
+        { term: "EB", definition: "Emergency Brake" },
+        { term: "TLC", definition: "Traction Loco Controller" },
+        { term: "PRC", definition: "Power Controller" }
+      ]
+    },
+    operatingModes: {
+      title: "Operating Modes",
+      items: [
+        { title: "Standby Mode", content: "Initial mode after power-on until mode selection." },
+        { title: "Staff Responsible (SR) Mode", content: "Used for normal train operation when Kavach is active." },
+        { title: "Limited Supervision (LS) Mode", content: "Used when some trackside equipment is not available." },
+        { title: "Full Supervision (FS) Mode", content: "Provides full protection based on Movement Authority." },
+        { title: "Override Mode", content: "Allows passing a signal at danger with speed restriction." },
+        { title: "On-sight Mode", content: "Used for moving with caution in specific situations." },
+        { title: "Trip Mode", content: "Activated when train passes a stop signal at ON. Emergency brake is applied." },
+        { title: "Post Trip Mode", content: "Entered after acknowledging Trip Mode. Allows movement with speed limit." },
+        { title: "Non Leading Mode", content: "Used for locomotives not leading the train." },
+        { title: "Reverse Mode", content: "For reverse movement of the train." },
+        { title: "Shunt Mode", content: "Used for shunting operations." },
+        { title: "System Failure Mode", content: "Activated when critical faults are detected." },
+        { title: "Isolation Mode", content: "Used when Kavach system needs to be isolated." }
+      ]
+    },
+    procedures: {
+      title: "Key Procedures",
+      items: [
+        { title: "Switching On Onboard Kavach", content: "1. Switch on Kavach power MCB. 2. Ensure Leading/Non Leading switch in 'Leading Position'. 3. Keep Kavach Isolation switch on NORMAL position. 4. Keep MR cock and EM cock in ON position. 5. Insert BL key or Reverser key. 6. Perform brake test and select train configuration." },
+        { title: "Switching Off Onboard Kavach", content: "1. Keep Kavach Isolation switch on ISOLATE position. 2. Keep MR cock and EM cock in OFF position. 3. Switch OFF power MCB." },
+        { title: "Brake Functional Test", content: "1. Ensure MR pressure > 7.00 kg/cm2 and BP pressure > 4.8 kg/cm2. 2. Onboard Kavach performs automatic brake test (NSB, FSB, EB). 3. Select Train Configuration after successful brake test." },
+        { title: "SOS Procedure", content: "To generate Manual SOS: Press 'SOS' and 'COMMON' on LP-OCIP simultaneously. For Unusual Stoppage SOS: Acknowledge within 15 seconds when prompted." },
+        { title: "Collision Prevention", content: "Kavach detects and prevents head-on collisions and rear-end collisions by automatically applying brakes when trains are on collision course." },
+        { title: "SPAD Recovery", content: "When SPAD occurs, Kavach enters Trip Mode. Once stopped, LP must acknowledge to enter Post Trip Mode, allowing movement with speed restriction." }
+      ]
+    },
+    dosAndDonts: {
+      title: "DOs and DON'Ts",
+      dos: [
+        "Check equipment intactness before switching ON",
+        "Read and understand the user manual thoroughly",
+        "Acknowledge alerts on LP-OCIP immediately",
+        "Properly select train configuration and operating modes",
+        "Handle LP-OCIP with care",
+        "Inform TLC/PRC about any defects",
+        "Follow G&SR provisions and operational requirements",
+        "Ensure intactness of RFID readers"
+      ],
+      donts: [
+        "Don't attempt any repair work",
+        "Don't switch OFF power when system is functioning",
+        "Don't remove system modules or connectors when functioning",
+        "Don't isolate Onboard Kavach when Train is in movement"
+      ]
+    }
+  };
+
+  const searchResults = useMemo(() => {
+    if (!searchTerm) return [];
+
+    const results = [];
+    const searchLower = searchTerm.toLowerCase();
+
+    Object.entries(sections).forEach(([sectionKey, section]) => {
+      if (section.content && section.content.toLowerCase().includes(searchLower)) {
+        results.push({ section: section.title, content: section.content });
+      }
+      if (section.items) {
+        section.items.forEach(item => {
+          if (
+            (item.term && item.term.toLowerCase().includes(searchLower)) ||
+            (item.definition && item.definition.toLowerCase().includes(searchLower)) ||
+            (item.title && item.title.toLowerCase().includes(searchLower)) ||
+            (item.content && item.content.toLowerCase().includes(searchLower))
+          ) {
+            results.push({
+              section: section.title,
+              content: item.term ? `${item.term}: ${item.definition}` : `${item.title}: ${item.content}`
+            });
+          }
+        });
+      }
+      if (section.dos) {
+        section.dos.forEach(item => {
+          if (item.toLowerCase().includes(searchLower)) {
+            results.push({ section: "DOs", content: item });
+          }
+        });
+      }
+      if (section.donts) {
+        section.donts.forEach(item => {
+          if (item.toLowerCase().includes(searchLower)) {
+            results.push({ section: "DON'Ts", content: item });
+          }
+        });
+      }
+    });
+
+    return results;
+  }, [searchTerm]);
+
+  const renderContent = (tab) => {
+    switch (tab) {
+      case 'overview':
+        return <p>{sections[tab].content}</p>;
+      case 'abbreviations':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {sections[tab].items.map((item, index) => (
+              <div key={index} className="flex items-start">
+                <Radio className="mr-2 mt-1" size={16} />
+                <div>
+                  <span className="font-semibold">{item.term}:</span> {item.definition}
+                </div>
+              </div>
+            ))}
+          </div>
+        );
+      case 'operatingModes':
+      case 'procedures':
+        return (
+          <div>
+            {sections[tab].items.map((item, index) => (
+              <div key={index} className="mb-4">
+                <h3 className="font-semibold mb-2 flex items-center">
+                  <Settings className="mr-2" size={16} /> {item.title}
+                </h3>
+                <p>{item.content}</p>
+              </div>
+            ))}
+          </div>
+        );
+      case 'dosAndDonts':
+        return (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h3 className="font-semibold mb-2 flex items-center">
+                <Cpu className="mr-2" /> DOs
+              </h3>
+              <ul className="list-disc pl-5">
+                {sections[tab].dos.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-2 flex items-center">
+                <AlertTriangle className="mr-2" /> DON'Ts
+              </h3>
+              <ul className="list-disc pl-5">
+                {sections[tab].donts.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Kavach Operation Manual Dashboard</h1>
+      <div className="mb-4 flex items-center">
+        <input
+          type="text"
+          placeholder="Search..."
+          className="border rounded p-2 mr-2 flex-grow"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <Search className="text-gray-500" />
+      </div>
+      {searchTerm ? (
+        <div className="bg-white shadow-md rounded p-4">
+          <h2 className="text-xl font-semibold mb-4">Search Results</h2>
+          {searchResults.length > 0 ? (
+            searchResults.map((result, index) => (
+              <div key={index} className="mb-4">
+                <h3 className="font-semibold">{result.section}</h3>
+                <p>{result.content}</p>
+              </div>
+            ))
+          ) : (
+            <p>No results found for "{searchTerm}"</p>
+          )}
+        </div>
+      ) : (
+        <>
+          <div className="mb-4">
+            <div className="flex flex-wrap border-b">
+              {Object.keys(sections).map((key) => (
+                <button
+                  key={key}
+                  className={`py-2 px-4 ${activeTab === key ? 'border-b-2 border-blue-500' : ''}`}
+                  onClick={() => setActiveTab(key)}
+                >
+                  {sections[key].title}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="bg-white shadow-md rounded p-4">
+            <h2 className="text-xl font-semibold mb-4">{sections[activeTab].title}</h2>
+            {renderContent(activeTab)}
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+export default Dashboard;
