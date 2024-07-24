@@ -163,61 +163,13 @@
                 { title: "System Failure Mode", content: "Activated when critical faults are detected." },
                 { title: "Isolation Mode", content: "Used when Kavach system needs to be isolated." }
             ],
-            procedures = [
-                {
-                    title: "Switching On Onboard Kavach",
-                    content: `
-                        <ul>
-                            <li>Switch on Kavach power MCB.</li>
-                            <li>Ensure Leading/Non Leading switch in 'Leading Position'.</li>
-                            <li>Keep Kavach Isolation switch on NORMAL position.</li>
-                            <li>Keep MR cock and EM cock in ON position.</li>
-                            <li>Insert BL key or Reverser key.</li>
-                            <li>Perform brake test and select train configuration.</li>
-                        </ul>
-                    `
-                },
-                {
-                    title: "Switching Off Onboard Kavach",
-                    content: `
-                        <ul>
-                            <li>Keep Kavach Isolation switch on ISOLATE position.</li>
-                            <li>Keep MR cock and EM cock in OFF position.</li>
-                            <li>Switch OFF power MCB.</li>
-                        </ul>
-                    `
-                },
-                {
-                    title: "Brake Functional Test",
-                    content: `
-                        <ul>
-                            <li>Ensure MR pressure > 7.00 kg/cm2 and BP pressure > 4.8 kg/cm2.</li>
-                            <li>Onboard Kavach performs automatic brake test (NSB, FSB, EB).</li>
-                            <li>Select Train Configuration after successful brake test.</li>
-                        </ul>
-                    `
-                },
-                {
-                    title: "SOS Procedure",
-                    content: `
-                        <ul>
-                            <li>To generate Manual SOS: Press 'SOS' and 'COMMON' on LP-OCIP simultaneously.</li>
-                            <li>For Unusual Stoppage SOS: Acknowledge within 15 seconds when prompted.</li>
-                        </ul>
-                    `
-                },
-                {
-                    title: "Collision Prevention",
-                    content: `
-                        <p>Kavach detects and prevents head-on collisions and rear-end collisions by automatically applying brakes when trains are on collision course.</p>
-                    `
-                },
-                {
-                    title: "SPAD Recovery",
-                    content: `
-                        <p>When SPAD occurs, Kavach enters Trip Mode. Once stopped, LP must acknowledge to enter Post Trip Mode, allowing movement with speed restriction.</p>
-                    `
-                }
+            procedures: [
+                { title: "Switching On Onboard Kavach", content: "1. Switch on Kavach power MCB. 2. Ensure Leading/Non Leading switch in 'Leading Position'. 3. Keep Kavach Isolation switch on NORMAL position. 4. Keep MR cock and EM cock in ON position. 5. Insert BL key or Reverser key. 6. Perform brake test and select train configuration." },
+                { title: "Switching Off Onboard Kavach", content: "1. Keep Kavach Isolation switch on ISOLATE position. 2. Keep MR cock and EM cock in OFF position. 3. Switch OFF power MCB." },
+                { title: "Brake Functional Test", content: "1. Ensure MR pressure > 7.00 kg/cm2 and BP pressure > 4.8 kg/cm2. 2. Onboard Kavach performs automatic brake test (NSB, FSB, EB). 3. Select Train Configuration after successful brake test." },
+                { title: "SOS Procedure", content: "To generate Manual SOS: Press 'SOS' and 'COMMON' on LP-OCIP simultaneously. For Unusual Stoppage SOS: Acknowledge within 15 seconds when prompted." },
+                { title: "Collision Prevention", content: "Kavach detects and prevents head-on collisions and rear-end collisions by automatically applying brakes when trains are on collision course." },
+                { title: "SPAD Recovery", content: "When SPAD occurs, Kavach enters Trip Mode. Once stopped, LP must acknowledge to enter Post Trip Mode, allowing movement with speed restriction." }
             ],
             dosAndDonts: {
                 dos: [
