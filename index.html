@@ -13,19 +13,24 @@
         .tab-content.active {
             display: block;
         }
+        .tab.active {
+            background-color: #f0f9ff; /* Light blue background for the active tab */
+            border-bottom: 2px solid #1d4ed8; /* Blue border for active tab */
+            color: #1d4ed8; /* Blue text for the active tab */
+        }
     </style>
 </head>
 <body class="bg-gray-100">
     <div class="container mx-auto p-4">
-    <h1 class="text-4xl font-bold mb-12 text-center mx-auto text-blue-700">
-        e-Operating Manual for Loco Pilots
-        <br>
-        <span class="text-3xl italic text-blue-700">Kavach Spec Ver 3.2</span>
-    </h1>
-    <div class="mb-8 flex justify-center items-center"> <!-- Increased margin-bottom to create space -->
-        <input type="text" id="searchInput" placeholder="Search..." class="border-2 border-blue-500 rounded-lg p-2 text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full max-w-md">
-        <i data-lucide="search" class="text-gray-500 ml-3 text-lg"></i>
-    </div>
+        <h1 class="text-4xl font-bold mb-12 text-center mx-auto text-blue-700">
+            e-Operating Manual for Loco Pilots
+            <br>
+            <span class="text-3xl italic text-blue-700">Kavach Spec Ver 3.2</span>
+        </h1>
+        <div class="mb-8 flex justify-center items-center"> <!-- Increased margin-bottom to create space -->
+            <input type="text" id="searchInput" placeholder="Search..." class="border-2 border-blue-500 rounded-lg p-2 text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full max-w-md">
+            <i data-lucide="search" class="text-gray-500 ml-3 text-lg"></i>
+        </div>
         <div id="searchResults" class="bg-white shadow-md rounded p-4 hidden">
             <h2 class="text-xl font-semibold mb-4">Search Results</h2>
             <div id="resultsContent"></div>
@@ -33,7 +38,7 @@
         <div id="mainContent">
             <div class="mb-4">
                 <div class="flex flex-wrap border-b">
-                    <button class="tab py-2 px-4 border-b-2 border-blue-500" data-tab="overview">Overview</button>
+                    <button class="tab py-2 px-4" data-tab="overview">Overview</button>
                     <button class="tab py-2 px-4" data-tab="abbreviations">Abbreviations</button>
                     <button class="tab py-2 px-4" data-tab="operatingModes">Operating Modes</button>
                     <button class="tab py-2 px-4" data-tab="procedures">Key Procedures</button>
@@ -219,15 +224,22 @@
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => {
                 tab.addEventListener('click', () => {
-                    tabs.forEach(t => t.classList.remove('border-blue-500'));
-                    tab.classList.add('border-blue-500');
+                    // Remove active class from all tabs
+                    tabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to the clicked tab
+                    tab.classList.add('active');
+                    
+                    // Hide all tab contents
                     const tabContent = document.querySelectorAll('.tab-content');
                     tabContent.forEach(content => content.classList.remove('active'));
+                    
+                    // Show the content of the clicked tab
                     document.getElementById(tab.dataset.tab).classList.add('active');
                 });
             });
         }
-
+        
         function setupSearch() {
             const searchInput = document.getElementById('searchInput');
             const searchResults = document.getElementById('searchResults');
