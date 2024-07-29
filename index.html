@@ -82,6 +82,7 @@
                             <a href="#" class="tab" data-tab="dosAndDonts">DOs and DON'Ts</a>
                         </div>
                     </div>
+                    <button class="tab py-2 px-4" data-tab="quiz">Take Quiz</button>
                 </div>
             </div>
             <div class="bg-white shadow-md rounded p-4">
@@ -124,6 +125,13 @@
                         </div>
                     </div>
                 </div>
+                <div id="quiz" class="tab-content">
+                    <h2 class="text-xl font-semibold mb-4">Quiz</h2>
+                    <div id="quizContent">
+                        <!-- Quiz content will be dynamically added here -->
+                    </div>
+                    <button id="submitQuiz" class="bg-blue-500 text-white py-2 px-4 rounded mt-4">Submit Quiz</button>
+                </div>
             </div>
         </div>
     <div class="footer-text">
@@ -152,6 +160,40 @@
             }
         };
 
+        // Quiz data
+        const quizQuestions = [
+            {
+                question: "Which of the the following are the objectives of KAVACH?",
+                options: ["Protects against SPAD", "Protect against excess speed", "Protects against collision", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "The Display provided in the LP cab is called",
+                options: ["FDCS", "VCU", "DMI", "MEP"],
+                answer: "DMI"
+            },
+            {
+                question: "Full form of DMI is ?",
+                options: ["Driver Machine Interface", "Driver Management interface", "Dual machine interface", "Driver multi interface"],
+                answer: "Driver Machine Interface"
+            },
+            {
+                question: "Which of the the following make of KAVACH available in the market?",
+                options: ["KERNEX", "HBL", "MEDHA", "All of the above"],
+                answer: "All of the above"
+            },
+            {
+                question: "KAVACH also called----",
+                options: ["TCMS", "TCAS", "TCKS", "None of the above"],
+                answer: "TCAS"
+            },
+            {
+                question: "To Pass the Signal at ON with proper authority, Kavach will operate in which mode?",
+                options: ["SPAD mode", "Bypass mode", "Override mode", "SOS mode"],
+                answer: "Override mode"
+            }
+        ];
+
         // Populate content
         document.addEventListener('DOMContentLoaded', () => {
             populateAbbreviations();
@@ -160,6 +202,7 @@
             populateDosAndDonts();
             setupTabNavigation();
             setupSearch();
+            setupQuiz();
             lucide.createIcons();
         });
 
@@ -322,6 +365,38 @@
             } else {
                 resultsContent.innerHTML = '<p>No results found</p>';
             }
+        }
+
+        function setupQuiz() {
+            const quizContent = document.getElementById('quizContent');
+            const randomQuestions = quizQuestions.sort(() => 0.5 - Math.random()).slice(0, 10);
+            
+            randomQuestions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'mb-4';
+                questionDiv.innerHTML = `
+                    <p class="font-semibold">${index + 1}. ${q.question}</p>
+                    <div>
+                        ${q.options.map((option, i) => `
+                            <label class="block">
+                                <input type="radio" name="question${index}" value="${option}"> ${option}
+                            </label>
+                        `).join('')}
+                    </div>
+                `;
+                quizContent.appendChild(questionDiv);
+            });
+
+            document.getElementById('submitQuiz').addEventListener('click', () => {
+                let score = 0;
+                randomQuestions.forEach((q, index) => {
+                    const selectedOption = document.querySelector(`input[name="question${index}"]:checked`);
+                    if (selectedOption && selectedOption.value === q.answer) {
+                        score += 1;
+                    }
+                });
+                alert(`You scored ${score} out of ${randomQuestions.length}`);
+            });
         }
     </script>
 </body>
