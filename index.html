@@ -228,7 +228,11 @@
                     "Handle LP-OCIP with care",
                     "Inform TLC/PRC about any defects",
                     "Follow G&SR provisions and operational requirements",
-                    "Ensure intactness of RFID readers"
+                    "Ensure intactness of RFID readers",
+                    "Don't attempt any repair work",
+                    "Don't switch OFF power when system is functioning",
+                    "Don't remove system modules or connectors when functioning",
+                    "Don't isolate Onboard Kavach when Train is in movement"
                 ],
                 donts: [
                     "Don't attempt any repair work",
@@ -339,11 +343,11 @@
                 dosContainer.appendChild(li);
             });
 
-            sections.dosAndDonts.donts.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                dontsContainer.appendChild(li);
-            });
+            // sections.dosAndDonts.donts.forEach(item => {
+            //     const li = document.createElement('li');
+            //     li.textContent = item;
+            //     dontsContainer.appendChild(li);
+            // });
         }
 
         function setupTabNavigation() {
