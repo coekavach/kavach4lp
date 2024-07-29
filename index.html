@@ -75,7 +75,7 @@
                     <button class="tab py-2 px-4" data-tab="overview">Overview</button>
                     <button class="tab py-2 px-4" data-tab="abbreviations">Abbreviations</button>
                     <div class="dropdown">
-                        <button class="tab py-2 px-4">Kavach Operation</button>
+                        <button class="tab py-2 px-4" data-tab="operatingModes">Kavach Operation</button>
                         <div class="dropdown-content">
                             <a href="#" class="tab" data-tab="operatingModes">Operating Modes</a>
                             <a href="#" class="tab" data-tab="procedures">Key Procedures</a>
@@ -243,6 +243,24 @@
                     // Show the content of the clicked tab
                     document.getElementById(tab.dataset.tab).classList.add('active');
                 });
+            });
+
+            // Set "Kavach Operation" to show Operating Modes content when clicked
+            const kavachOperationTab = document.querySelector('.dropdown > .tab');
+            kavachOperationTab.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Remove active class from all tabs
+                tabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to the Kavach Operation tab
+                kavachOperationTab.classList.add('active');
+                
+                // Hide all tab contents
+                const tabContent = document.querySelectorAll('.tab-content');
+                tabContent.forEach(content => content.classList.remove('active'));
+                
+                // Show the Operating Modes content
+                document.getElementById('operatingModes').classList.add('active');
             });
         }
         
