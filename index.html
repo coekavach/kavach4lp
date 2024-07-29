@@ -228,9 +228,10 @@
                 div.className = 'mb-4';
                 div.innerHTML = `
                     <h3 class="font-semibold mb-2 flex items-center">
-                        <i data-lucide="settings" class="mr-2"></i> ${item.title}
+                        <span class="font-semibold">${item.title}:</span> ${item.content}
+                        // <i data-lucide="settings" class="mr-2"></i> ${item.title}
                     </h3>
-                    <p>${item.content}</p>
+                    // <p>${item.content}</p>
                 `;
                 container.appendChild(div);
             });
