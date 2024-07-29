@@ -14,9 +14,9 @@
             display: block;
         }
         .tab.active {
-            background-color: #f0f9ff; /* Light blue background for the active tab */
-            border-bottom: 2px solid #1d4ed8; /* Blue border for active tab */
-            color: #1d4ed8; /* Blue text for the active tab */
+            background-color: #f0f9ff;
+            border-bottom: 2px solid #1d4ed8;
+            color: #1d4ed8;
         }
         .footer-text {
             position: fixed;
@@ -25,6 +25,30 @@
             margin: 16px;
             font-style: italic;
             color: grey;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
         }
     </style>
 </head>
@@ -37,7 +61,7 @@
                 Kavach Spec Ver 3.2
             </span>
         </h1>
-        <div class="mb-8 flex justify-center items-center"> <!-- Increased margin-bottom to create space -->
+        <div class="mb-8 flex justify-center items-center">
             <input type="text" id="searchInput" placeholder="Search..." class="border-2 border-blue-500 rounded-lg p-2 text-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full max-w-md">
             <i data-lucide="search" class="text-gray-500 ml-3 text-lg"></i>
         </div>
@@ -50,9 +74,14 @@
                 <div class="flex flex-wrap border-b">
                     <button class="tab py-2 px-4" data-tab="overview">Overview</button>
                     <button class="tab py-2 px-4" data-tab="abbreviations">Abbreviations</button>
-                    <button class="tab py-2 px-4" data-tab="operatingModes">Operating Modes</button>
-                    <button class="tab py-2 px-4" data-tab="procedures">Key Procedures</button>
-                    <button class="tab py-2 px-4" data-tab="dosAndDonts">DOs and DON'Ts</button>
+                    <div class="dropdown">
+                        <button class="tab py-2 px-4">Kavach Operation</button>
+                        <div class="dropdown-content">
+                            <a href="#" class="tab" data-tab="operatingModes">Operating Modes</a>
+                            <a href="#" class="tab" data-tab="procedures">Key Procedures</a>
+                            <a href="#" class="tab" data-tab="dosAndDonts">DOs and DON'Ts</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="bg-white shadow-md rounded p-4">
@@ -199,7 +228,8 @@
         function setupTabNavigation() {
             const tabs = document.querySelectorAll('.tab');
             tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
                     // Remove active class from all tabs
                     tabs.forEach(t => t.classList.remove('active'));
                     
