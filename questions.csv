@@ -1,0 +1,26 @@
+Which of the the following are the objectives of KAVACH?,a)Protects aganist SPAD,b)Protect against excess speed,c)Protects against collision,d)All of the above,d)All of the above
+The Display provided in the LP cab is called,a)FDCS,b)VCU,c)DMI,d)MEP,c)DMI
+Full form of DMI is ?,a)Driver Machine Interface,b)Driver Management interface,c)Dual machine interface,d)Driver multi interface,a)Driver Machine Interface
+Which of the the following make of KAVACH available in loco?,a)KERNEX,b)HBL,c)MEDHA,d)All of the above,d)All of the above
+KAVACH also called----,a)TCMS,b)TCAS,c)TCKS,d)None of the above,b)TCAS
+"To Pass the Signal at ON with proper autority, --- mode to be selected?",a)SPAD mode,b)Bypass mode,c)Override mode,d)SOS mode,c)Override mode
+"When override mode selected , then MPS will be restricted to --- kmph?",a)105,b)10,c)8,d)15,d)15
+In KERNEX and HBL make ---- cocks positions to be changed from OFF to ON?,a)MR,b)BP,c) aand b,d)only b,c) aand b
+In MEDHA make ---- cocks positions to be changed from OFF to ON?,a)MR,b)BP,c)EMERGENCY,d)aandc,d)aandc
+In MEDHA make ---- cock/cocks positions to be changed from ON to OFF?,a)MR,b)BP,c)EMERGENCY,d)aandb,b)BP
+"In general, BIU and TCAS MCBs provided in ?",a)CAB,b)Machine HB-1,c)SB-1,d)All of the above,c)SB-1
+Position of Lead and Non leading switch in Active Cab?,a)Lead,b)Active,c)Sleep,d)Non Leading,a)Lead
+Position of Lead and Non leading switch in inactive Cab?,a)Lead,b)Active,c)Sleep,d)Non Leading,d)Non Leading
+"In E70 Brake  system, before switching-ON BIU and TCS MCBs --- cock postion to be changed from close to open ?",a)TCAS isolation cock,b)VCU,c)DMI,d)MEP,a)TCAS isolation cock
+"In E70 Brake system, to activate TCAS ,BIU selection switch postion to be changed to ?",a)Active,b)Service,c)Working,d)None of the above,b)Service
+"In E70 Brake system, To Deactivate TCAS ,BIU selection switch postion to be changed to ?",a)Deactive,b)Isolate,c)Non leading,d)Non-working,b)Isolate
+"To isolate TCAS in E 70 loco, ------- position to be changed?",a)Isolating cock close,b)BIU switch to ISOLATE mode,c)BIU and TCAS MCB's off,d)All of the above,d)All of the above
+What happens if TCAS remain active in Non-TCAS territory?,a)Only TE not available,b)Emergency Brake will be applied,c)No any effect,d)Speed not incresed more than 10,b)Emergency Brake will be applied
+Which switch is to be pressed during emergency with respect to KAVATCH?,a)Emergency,b)VCU,c)DMI,d)SOS,d)SOS
+"If Train stopped in the section with LC and SOS signal not acknowledgw by LP with in --- seconds ,emergency BKs will be applied?",a)5,b)15,c)10,d)20,c)10
+Incase of Continuous horn due to failure of KAVACH side--- bypass switch to be moved to OFF position?,a)BP,b)MR,c)HORN,d)All of the above,c)HORN
+"After switching ON KAVACH, ---- Brake test will be conducted by system?",a)Normal,b)Full Service,c)Emergency,d)All of the above,d)All of the above
+"After pressing SOS, within the radius of ----- mtrs emergency brakes applied in the trains availble",a)1500,b)2000,c)2500,d)3000,d)3000
+"If the train enetered from KAVACH section to Non KAVACH section,if not acknowledged with in stipulated time ---- happens",a)TE becomes 0,b)Speed reduced to 10 kmph,c)Emergency brakes will apply,d)All of the above,c)Emergency brakes will apply
+"Once SOS activated , after passing --- mtrs from SOS source speed will be resumed to normal?",a)1000,b)1500,c)100,d)200,b)1500
+Kavach is an indigeneous---developed by the Ministry of Railways in India.,a) Train Collision prevention system,b) Automatic train Protection system,c) Anti-Collision technology,d) Train Communication network,b) Automatic train Protection system
