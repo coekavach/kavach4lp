@@ -82,6 +82,7 @@
                             <a href="#" class="tab" data-tab="dosAndDonts">DOs and DON'Ts</a>
                         </div>
                     </div>
+                    <button class="tab py-2 px-4" data-tab="quiz">Take Quiz</button>
                 </div>
             </div>
             <div class="bg-white shadow-md rounded p-4">
@@ -124,11 +125,23 @@
                         </div>
                     </div>
                 </div>
+                <div id="quiz" class="tab-content">
+                    <h2 class="text-xl font-semibold mb-4">Kavach Knowledge Quiz</h2>
+                    <div id="quizContainer">
+                        <!-- Quiz content will be dynamically added here -->
+                    </div>
+                    <button id="submitQuiz" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Submit Quiz
+                    </button>
+                    <div id="quizResults" class="mt-4 hidden">
+                        <!-- Quiz results will be displayed here -->
+                    </div>
+                </div>
             </div>
         </div>
-    <div class="footer-text">
-        Centre of Excellence - Kavach
-    </div>
+        <div class="footer-text">
+            Centre of Excellence - Kavach
+        </div>
     </div>
     <script>
         // Data
@@ -152,177 +165,210 @@
             }
         };
 
-        // Populate content
-        document.addEventListener('DOMContentLoaded', () => {
-            populateAbbreviations();
-            populateOperatingModes();
-            populateProcedures();
-            populateDosAndDonts();
-            setupTabNavigation();
-            setupSearch();
-            lucide.createIcons();
-        });
-
-        function populateAbbreviations() {
-            const container = document.querySelector('#abbreviations .grid');
-            sections.abbreviations.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'flex items-start';
-                div.innerHTML = `
-                    <i data-lucide="radio" class="mr-2 mt-1"></i>
-                    <div>
-                        <span class="font-semibold">${item.term}:</span> ${item.definition}
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function populateOperatingModes() {
-            const container = document.querySelector('#operatingModes');
-            sections.operatingModes.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'mb-4';
-                div.innerHTML = `
-                    <h3 class="font-semibold mb-2 flex items-center">
-                        <i data-lucide="settings" class="mr-2"></i> ${item.title}
-                    </h3>
-                    <p>${item.content}</p>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function populateProcedures() {
-            const container = document.querySelector('#procedures');
-            sections.procedures.forEach(item => {
-                const div = document.createElement('div');
-                div.className = 'mb-4';
-                div.innerHTML = `
-                    <h3 class="font-semibold mb-2 flex items-center">
-                        <i data-lucide="settings" class="mr-2"></i> ${item.title}
-                    </h3>
-                    <p>${item.content}</p>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function populateDosAndDonts() {
-            const dosContainer = document.querySelector('#dosAndDonts ul:first-of-type');
-            const dontsContainer = document.querySelector('#dosAndDonts ul:last-of-type');
-            
-            sections.dosAndDonts.dos.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                dosContainer.appendChild(li);
-            });
-
-            sections.dosAndDonts.donts.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = item;
-                dontsContainer.appendChild(li);
-            });
-        }
-
-        function setupTabNavigation() {
-            const tabs = document.querySelectorAll('.tab');
-            tabs.forEach(tab => {
-                tab.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    // Remove active class from all tabs
-                    tabs.forEach(t => t.classList.remove('active'));
-                    
-                    // Add active class to the clicked tab
-                    tab.classList.add('active');
-                    
-                    // Hide all tab contents
-                    const tabContent = document.querySelectorAll('.tab-content');
-                    tabContent.forEach(content => content.classList.remove('active'));
-                    
-                    // Show the content of the clicked tab
-                    document.getElementById(tab.dataset.tab).classList.add('active');
-                });
-            });
-
-            // Set "Kavach Operation" to show Operating Modes content when clicked
-            const kavachOperationTab = document.querySelector('.dropdown > .tab');
-            kavachOperationTab.addEventListener('click', (e) => {
-                e.preventDefault();
-                // Remove active class from all tabs
-                tabs.forEach(t => t.classList.remove('active'));
-                
-                // Add active class to the Kavach Operation tab
-                kavachOperationTab.classList.add('active');
-                
-                // Hide all tab contents
-                const tabContent = document.querySelectorAll('.tab-content');
-                tabContent.forEach(content => content.classList.remove('active'));
-                
-                // Show the Operating Modes content
-                document.getElementById('operatingModes').classList.add('active');
-            });
-        }
-        
-        function setupSearch() {
-            const searchInput = document.getElementById('searchInput');
-            const searchResults = document.getElementById('searchResults');
-            const mainContent = document.getElementById('mainContent');
-            const resultsContent = document.getElementById('resultsContent');
-
-            searchInput.addEventListener('input', () => {
-                const searchTerm = searchInput.value.toLowerCase();
-                if (searchTerm.length > 0) {
-                    const results = performSearch(searchTerm);
-                    displaySearchResults(results);
-                    searchResults.classList.remove('hidden');
-                    mainContent.classList.add('hidden');
-                } else {
-                    searchResults.classList.add('hidden');
-                    mainContent.classList.remove('hidden');
-                }
-            });
-        }
-
-        function performSearch(searchTerm) {
-            const results = [];
-            Object.entries(sections).forEach(([sectionKey, sectionContent]) => {
-                if (Array.isArray(sectionContent)) {
-                    sectionContent.forEach(item => {
-                        if (JSON.stringify(item).toLowerCase().includes(searchTerm)) {
-                            results.push({ section: sectionKey, content: item });
-                        }
-                    });
-                } else if (typeof sectionContent === 'object') {
-                    Object.entries(sectionContent).forEach(([subKey, subContent]) => {
-                        subContent.forEach(item => {
-                            if (item.toLowerCase().includes(searchTerm)) {
-                                results.push({ section: `${sectionKey} - ${subKey}`, content: item });
-                            }
-                        });
-                    });
-                }
-            });
-            return results;
-        }
-
-        function displaySearchResults(results) {
-            const resultsContent = document.getElementById('resultsContent');
-            resultsContent.innerHTML = '';
-            if (results.length > 0) {
-                results.forEach(result => {
-                    const div = document.createElement('div');
-                    div.className = 'mb-4';
-                    div.innerHTML = `
-                        <h3 class="font-semibold">${result.section}</h3>
-                        <p>${typeof result.content === 'string' ? result.content : JSON.stringify(result.content)}</p>
-                    `;
-                    resultsContent.appendChild(div);
-                });
-            } else {
-                resultsContent.innerHTML = '<p>No results found</p>';
-            }
-        }
-    </script>
-</body>
-</html>
+        // Quiz questions
+        const quizQuestions = [
+            {
+                question: "Which of the the following are the objectives of KAVACH?",
+                options: [
+                    "a) Protects aganist SPAD",
+                    "b) Protect against excess speed",
+                    "c) Protects against collision",
+                    "d) All of the above"
+                ],
+                answer: "d) All of the above"
+            },
+            {
+                question: "The Display provided in the LP cab is called",
+                options: [
+                    "a) FDCS",
+                    "b) VCU",
+                    "c) DMI",
+                    "d) MEP"
+                ],
+                answer: "c) DMI"
+            },
+            {
+                question: "Full form of DMI is ?",
+                options: [
+                    "a) Driver Machine Interface",
+                    "b) Driver Management interface",
+                    "c) Dual machine interface",
+                    "d) Driver multi interface"
+                ],
+                answer: "a) Driver Machine Interface"
+            },
+            {
+                question: "Which of the the following make of KAVACH available in loco?",
+                options: [
+                    "a) KERNEX",
+                    "b) HBL",
+                    "c) MEDHA",
+                    "d) All of the above"
+                ],
+                answer: "d) All of the above"
+            },
+            {
+                question: "KAVACH also called----",
+                options: [
+                    "a) TCMS",
+                    "b) TCAS",
+                    "c) TCKS",
+                    "d) None of the above"
+                ],
+                answer: "b) TCAS"
+            },
+            {
+                question: "To Pass the Signal at ON with proper autority, --- mode to be selected?",
+                options: [
+                    "a) SPAD mode",
+                    "b) Bypass mode",
+                    "c) Override mode",
+                    "d) SOS mode"
+                ],
+                answer: "c) Override mode"
+            },
+            {
+                question: "When override mode selected , then MPS will be restricted to --- kmph?",
+                options: [
+                    "a) 105",
+                    "b) 10",
+                    "c) 8",
+                    "d) 15"
+                ],
+                answer: "d) 15"
+            },
+            {
+                question: "In KERNEX and HBL make ---- cocks positions to be changed from OFF to ON?",
+                options: [
+                    "a) MR",
+                    "b) BP",
+                    "c) a and b",
+                    "d) only b"
+                ],
+                answer: "c) a and b"
+            },
+            {
+                question: "In MEDHA make ---- cocks positions to be changed from OFF to ON?",
+                options: [
+                    "a) MR",
+                    "b) BP",
+                    "c) EMERGENCY",
+                    "d) a and c"
+                ],
+                answer: "d) a and c"
+            },
+            {
+                question: "In MEDHA make ---- cock/cocks positions to be changed from ON to OFF?",
+                options: [
+                    "a) MR",
+                    "b) BP",
+                    "c) EMERGENCY",
+                    "d) a and b"
+                ],
+                answer: "b) BP"
+            },
+            {
+                question: "In general, BIU and TCAS MCBs provided in ?",
+                options: [
+                    "a) CAB",
+                    "b) Machine HB-1",
+                    "c) SB-1",
+                    "d) All of the above"
+                ],
+                answer: "c) SB-1"
+            },
+            {
+                question: "Position of Lead and Non leading switch in Active Cab?",
+                options: [
+                    "a) Lead",
+                    "b) Active",
+                    "c) Sleep",
+                    "d) Non Leading"
+                ],
+                answer: "a) Lead"
+            },
+            {
+                question: "Position of Lead and Non leading switch in inactive Cab?",
+                options: [
+                    "a) Lead",
+                    "b) Active",
+                    "c) Sleep",
+                    "d) Non Leading"
+                ],
+                answer: "d) Non Leading"
+            },
+            {
+                question: "In E70 Brake  system, before switching-ON BIU and TCS MCBs --- cock postion to be changed from close to open ?",
+                options: [
+                    "a) TCAS isolation cock",
+                    "b) VCU",
+                    "c) DMI",
+                    "d) MEP"
+                ],
+                answer: "a) TCAS isolation cock"
+            },
+            {
+                question: "In E70 Brake system, to activate TCAS ,BIU selection switch postion to be changed to ?",
+                options: [
+                    "a) Active",
+                    "b) Service",
+                    "c) Working",
+                    "d) None of the above"
+                ],
+                answer: "b) Service"
+            },
+            {
+                question: "In E70 Brake system, To Deactivate TCAS ,BIU selection switch postion to be changed to ?",
+                options: [
+                    "a) Deactive",
+                    "b) Isolate",
+                    "c) Non leading",
+                    "d) Non-working"
+                ],
+                answer: "b) Isolate"
+            },
+            {
+                question: "To isolate TCAS in E 70 loco, ------- position to be changed?",
+                options: [
+                    "a) Isolating cock close",
+                    "b) BIU switch to ISOLATE mode",
+                    "c) BIU and TCAS MCB's off",
+                    "d) All of the above"
+                ],
+                answer: "d) All of the above"
+            },
+            {
+                question: "What happens if TCAS remain active in Non-TCAS territory?",
+                options: [
+                    "a) Only TE not available",
+                    "b) Emergency Brake will be applied",
+                    "c) No any effect",
+                    "d) Speed not incresed more than 10"
+                ],
+                answer: "b) Emergency Brake will be applied"
+            },
+            {
+                question: "Which switch is to be pressed during emergency with respect to KAVATCH?",
+                options: [
+                    "a) Emergency",
+                    "b) VCU",
+                    "c) DMI",
+                    "d) SOS"
+                ],
+                answer: "d) SOS"
+            },
+            {
+                question: "If Train stopped in the section with LC and SOS signal not acknowledgw by LP with in --- seconds ,emergency BKs will be applied?",
+                options: [
+                    "a) 5",
+                    "b) 15",
+                    "c) 10",
+                    "d) 20"
+                ],
+                answer: "c) 10"
+            },
+            {
+                question: "Incase of Continuous horn due to failure of KAVACH side--- bypass switch to be moved to OFF position?",
+                options: [
+                    "a) BP",
+                    "b)
